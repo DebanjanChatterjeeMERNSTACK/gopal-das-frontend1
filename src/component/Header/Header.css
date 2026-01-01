@@ -1,0 +1,157 @@
+/* Base styles */
+.header_container {
+  width: 100%;
+  height: 110px;
+  background-color: #e6fdff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  padding-right: 20px;
+  padding-left: 20px;
+}
+
+.header_logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.header_menu {
+  display: flex;
+  align-items: center;
+}
+
+.header_menu li {
+  margin-left: 20px;
+  list-style: none;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.header_menu li:hover {
+  color: #004094;
+}
+
+/* Mobile menu button */
+.mobile_menu_btn {
+  display: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #004094;
+}
+
+/* Active link */
+.header_menu li a.active-link {
+  color: #004094;
+  font-weight: 600;
+}
+
+.header_menu li a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.header_menu li a:hover:not(.active-link) {
+  color: #004094;
+  transform: translateY(-2px);
+}
+
+/* ✅ Share Your Story button */
+.share_btn {
+  background-color: #004094;
+  color: #fff;
+  border: none;
+  border-radius: 30px;
+  padding: 8px 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.share_btn:hover {
+  background-color: #008d94;
+  transform: scale(1.05);
+}
+
+.logout-button {
+  background-color: #ff4d4d;
+  color: white;
+  padding: 6px 12px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+  background-color: #cc0000;
+}
+
+/* Tablet */
+@media (max-width: 992px) {
+  .header_menu {
+    justify-content: space-around;
+  }
+
+  .header_menu li {
+    margin-left: 15px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .header_menu {
+    position: absolute;
+    top: 110px;
+    left: 0;
+    width: 100%;
+    background-color: #f2ffff;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    transform: translateY(-150%);
+    transition: transform 0.5s ease-in-out;
+    z-index: 100;
+  }
+
+  .header_menu.active {
+    transform: translateY(0);
+  }
+
+  .header_menu li {
+    margin: 10px 0;
+    padding: 10px 0;
+    width: 100%;
+    text-align: center;
+  }
+
+  .header_menu li:hover {
+    background-color: rgba(0, 141, 132, 0.1);
+  }
+
+  .mobile_menu_btn {
+    display: block;
+  }
+
+  /* Adjust Share Button for mobile */
+  .share_btn {
+    width: 80%;
+    padding: 10px 0;
+    border-radius: 25px;
+  }
+}
+
+/* Small mobile */
+@media (max-width: 480px) {
+  .header_container {
+    height: 110px;
+  }
+
+  .header_menu {
+    top: 110px;
+  }
+}

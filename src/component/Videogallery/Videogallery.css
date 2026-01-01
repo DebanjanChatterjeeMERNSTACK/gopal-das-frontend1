@@ -1,0 +1,52 @@
+.videogallery_container {
+  width: 100%;
+  background-color:#e6fdff;
+}
+
+.bgimage {
+  background-color: #008d94;
+  color: white;
+  text-align: center;
+  padding: 40px 0;
+}
+
+.videogallery_maxwidth {
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px 10px;
+}
+
+.video_grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 5px;
+  padding: 10px;
+  max-width: 1200px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.video_size {
+  border-radius: 10px;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.video_wrapper iframe,
+.video_wrapper video {
+  width: 100%;
+  height: 100%;
+  border: none;
+  object-fit:cover;
+}
+
+
+.loader-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+}

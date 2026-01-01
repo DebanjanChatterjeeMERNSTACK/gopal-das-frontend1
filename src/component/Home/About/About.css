@@ -1,0 +1,119 @@
+        
+.about_contaner{
+    width: 100%;
+    /* height: 100dvh; */
+    background-color: #e6fdff;
+
+}
+.about_maxwidth{
+    max-width: 1200px;
+    margin: auto;
+    /* background-color: bisque; */
+    padding-right: 5px;
+    padding-left: 5px;
+    display: flex;
+    /* flex-wrap: wrap; */
+    gap: 40px;
+}
+.about_image{
+    width: 550px;
+    /* height: 100dvh; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+     padding-top: 50px;
+    padding-bottom: 50px;
+}
+.about_image img{
+ width: 400px;
+ height: 450px;
+ border-radius: 10px;
+}
+.about_contant{
+    padding-top: 50px;
+    padding-bottom: 50px;
+    /* display: flex;
+    justify-content: center; */
+    flex-direction: column;
+    width: 600px;
+}
+.about_contant h6{
+    color: #004094;
+}
+.about_contant h1{
+    font-weight: 600;
+    font-size: 24px;
+}
+.about_contant p{
+    text-align: justify;
+    font-size: 14px;
+}
+@media screen and (max-width: 1037px) {
+ .about_maxwidth{
+    max-width: 1200px;
+    /* height: 100dvh; */
+    margin: auto;
+    /* background-color: bisque; */
+    padding-right: 5px;
+    padding-left: 5px;
+    display: flex;
+    /* flex-wrap: wrap; */
+    gap: 20px;
+}
+}
+@media screen and (max-width: 1010px) {
+ .about_maxwidth{
+    max-width: 1200px;
+    /* height: 100dvh; */
+    margin: auto;
+    /* background-color: bisque; */
+    padding-right: 10px;
+    padding-left: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+.about_contant{
+    padding-top: 50px;
+    padding-bottom: 50px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+}
+.about_image{
+    width: 100%;
+    /* height: 100dvh; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+     padding-top: 50px;
+    padding-bottom: 50px;
+}
+}
+@media screen and (max-width: 484px) {
+ .about_maxwidth{
+    max-width: 1200px;
+    /* height: 100dvh; */
+    margin: auto;
+    /* background-color: bisque; */
+    padding-right: 10px;
+    padding-left: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+.about_contant{
+    padding-top: 30px;
+    padding-bottom: 30px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+}
+.about_image img{
+ max-width: 100%;
+ height: 400px;
+ border-radius: 10px;
+}
+}

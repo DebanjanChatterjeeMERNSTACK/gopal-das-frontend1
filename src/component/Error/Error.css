@@ -1,0 +1,50 @@
+.error-page {
+  height: 100vh;
+  background: linear-gradient(135deg, #fdfbfb, #ebedee);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.error-content {
+  max-width: 500px;
+  padding: 30px;
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  animation: floatIn 0.8s ease-out forwards;
+  transform: translateY(20px);
+  opacity: 0;
+}
+
+.error-content h1 {
+  font-size: 100px;
+  color: #ff4e4e;
+  margin: 0;
+}
+
+.error-content h2 {
+  font-size: 28px;
+  color: #222;
+  margin: 10px 0;
+}
+
+.error-content p {
+  color: #555;
+  font-size: 16px;
+  margin-bottom: 30px;
+}
+
+
+
+
+
+@keyframes floatIn {
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

@@ -1,0 +1,32 @@
+.Blog_contant_contaner {
+  width: 100%;
+  /* height: 70vh; */
+  background-color: #e6fdff;
+}
+.Blog_contant_maxwidth {
+  margin: auto auto;
+  max-width: 1200px;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+}
+.Blog_contant_contant {
+  width: 100%;
+  background-color: rgb(255, 255, 255);
+  border-radius: 20px;
+  padding: 30px;
+}
+
+.Blog_contant_contant h1 {
+    font-size: 24px;
+    font-weight:700 ;
+}
+.Blog_contant_contant p {
+  color:rgb(74, 85, 104);
+  font-size: 18px;
+  font-weight:400 ;
+  line-height: 35px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  text-align: justify;
+}
