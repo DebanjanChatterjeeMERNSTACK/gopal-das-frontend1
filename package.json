@@ -17,6 +17,7 @@
     "react-pageflip": "^2.0.3",
     "react-pdf": "^10.0.1",
     "react-router-dom": "^7.6.3",
+    "react-share": "^5.2.2",
     "react-slick": "^0.30.3",
     "react-text-loop": "^2.3.0",
     "slick-carousel": "^1.8.1",

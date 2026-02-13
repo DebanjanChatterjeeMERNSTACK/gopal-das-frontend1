@@ -6,6 +6,14 @@ import { FiDownload } from "react-icons/fi";
 import { NavLink, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import { FaRegComments } from "react-icons/fa6";
+import {
+  FacebookShareButton,
+  TwitterShareButton,
+  WhatsappShareButton,
+  FacebookIcon,
+  TwitterIcon,
+  WhatsappIcon,
+} from "react-share";
 
 const URL = import.meta.env.VITE_URL;
 
@@ -103,9 +111,7 @@ const Book_details = () => {
 
   return (
     <div className="bookdel_contaner">
-      <div className="bgimage">
-        {/* <h3>Book Details</h3> */}
-      </div>
+      <div className="bgimage">{/* <h3>Book Details</h3> */}</div>
 
       <div className="bookdel_maxwidth">
         {/* Loader */}
@@ -142,13 +148,39 @@ const Book_details = () => {
                     <span>{bookdetails?.bookPages?.length} pages</span>
                   </div>
                 </div>
-                <div>
+                <div className="d-flex gap-2">
                   <NavLink to={`/book-details/${id}/readbook/${id}`}>
                     <button className="btn2">Read Me</button>
                   </NavLink>
                   <NavLink to={`/book`}>
                     <button className="btn2">Back</button>
                   </NavLink>
+                </div>
+
+                <div className="mt-3">
+                  <div className="d-flex gap-2">
+                    <FacebookShareButton
+                      url={window.location.href}
+                      quote={`Check out this amazing book: ${bookdetails?.bookTitle}`}
+                    >
+                      <FacebookIcon size={40} round />
+                    </FacebookShareButton>
+
+                    <TwitterShareButton
+                      url={window.location.href}
+                      title={`Check out this amazing book: ${bookdetails?.bookTitle}`}
+                    >
+                      <TwitterIcon size={40} round />
+                    </TwitterShareButton>
+
+                    <WhatsappShareButton
+                      url={window.location.href}
+                      title={`Check out this amazing book: ${bookdetails?.bookTitle}`}
+                    >
+                      <WhatsappIcon size={40} round />
+                    </WhatsappShareButton>
+
+                  </div>
                 </div>
               </div>
             </div>
@@ -240,10 +272,13 @@ const Book_details = () => {
                       <div className="ms-2">
                         <h5 className="fs-6 mb-1">
                           {c.commentsName}{" "}
-                          <small className="text-muted"  style={{
-                            wordBreak: "break-word",
-                            whiteSpace: "pre-wrap",
-                          }}>
+                          <small
+                            className="text-muted"
+                            style={{
+                              wordBreak: "break-word",
+                              whiteSpace: "pre-wrap",
+                            }}
+                          >
                             ({c.commentsEmail})
                           </small>
                         </h5>
