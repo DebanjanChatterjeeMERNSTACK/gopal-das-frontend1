@@ -44,7 +44,7 @@ const HeroSection = () => {
                 // paddingRight:"20px",
                 fontSize: "20px",
                 fontWeight: "normal",
-                width:318
+                width:464
               }}
             >
              “An eminent author measures success not by fame, but by the impact his words leave on human conscience.”
