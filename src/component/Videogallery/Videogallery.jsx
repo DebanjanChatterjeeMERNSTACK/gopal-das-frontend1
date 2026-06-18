@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "./Videogallery.css";
+import Video from "../../assets/poem.mp4";
 
 const URL = import.meta.env.VITE_URL;
 
@@ -45,6 +46,14 @@ const Videogallery = () => {
 
       <div className="videogallery_maxwidth">
         <div className="video_grid">
+          <video
+            width={300}
+            height={400}
+            controls={true}
+            style={{ textAlign: "center" }}
+          >
+            <source src={Video} type="video/mp4" />
+          </video>
           {loading ? (
             <div className="loader-wrapper">
               <div className="spinner-border text-success" role="status" />
