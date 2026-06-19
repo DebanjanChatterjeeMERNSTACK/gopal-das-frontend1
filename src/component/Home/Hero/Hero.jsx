@@ -37,16 +37,7 @@ const HeroSection = () => {
               <h2>Social Worker</h2>
             </TextLoop>
            
-            <i
-              style={{
-                color: "#004094",
-                marginTop: "20px",
-                // paddingRight:"20px",
-                fontSize: "20px",
-                fontWeight: "normal",
-                width:464
-              }}
-            >
+            <i>
              “An eminent author measures success not by fame, but by the impact his words leave on human conscience.”
             </i>
               <div className="">
@@ -64,7 +55,7 @@ const HeroSection = () => {
                 </span>
                 <span className="btn-text">Get Started</span>
               </button> */}
-              <img src={image1} width={320} height={100} />
+              <img src={image1} width={310} height={100} />
 
             </div>
             <div className="social-buttons">
