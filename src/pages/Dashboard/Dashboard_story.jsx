@@ -158,7 +158,7 @@ const Dashboard_story = () => {
                       {e.storyDescription}
                     </td>
                     <td className="d-flex gap-2">
-                      <button
+                      {/* <button
                         className={`btn btn-sm ${
                           e.isPublished ? "btn-success" : "btn-warning"
                         }`}
@@ -167,7 +167,7 @@ const Dashboard_story = () => {
                         }
                       >
                         {e.isPublished ? "Unpublish" : "Publish"}
-                      </button>
+                      </button> */}
 
                       <button
                         type="button"
