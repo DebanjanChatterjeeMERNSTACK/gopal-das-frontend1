@@ -51,7 +51,7 @@ const Share = () => {
             setfullname("");
             setphone("");
             setemail("");
-            setage(null)
+            setage("")
             setoccupation("")
             setstorygenre("")
             setstorylang("")
