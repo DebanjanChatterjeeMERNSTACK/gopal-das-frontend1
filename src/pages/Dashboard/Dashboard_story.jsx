@@ -1,61 +1,47 @@
-
 import React, { useEffect, useState } from "react";
-import {
-  FaBookOpen,
-  FaCalendarAlt,
-  FaCheck,
-  FaClock,
-  FaEnvelope,
-  FaEye,
-  FaFilePdf,
-  FaMapMarkerAlt,
-  FaPhone,
-  FaSearch,
-  FaTimes,
-  FaTrash,
-  FaUserCircle,
-} from "react-icons/fa";
+import "./Dashboard.css";
+import { FaTrash, FaReply } from "react-icons/fa";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
-import "./Dashboard_story.css";
+import { FaFilePdf, FaBookOpen, FaExternalLinkAlt } from "react-icons/fa";
+import {
+  FaUser,
+  FaEnvelope,
+  FaPhone,
+  FaBirthdayCake,
+  FaBriefcase,
+  FaMapMarkerAlt,
+} from "react-icons/fa";
 
 const URL = import.meta.env.VITE_URL;
 
 const Dashboard_story = () => {
   const navigate = useNavigate();
-
   const [Story, setStory] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [selectedStory, setSelectedStory] = useState(null);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [statusFilter, setStatusFilter] = useState("all");
 
-  // Fetch Story
+  // Reply Modal States
   const fetchData = async () => {
     try {
       setLoading(true);
-
       const res = await fetch(`${URL}/story`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
         },
       });
-
       const data = await res.json();
 
       if (data.status === 200) {
         setStory(data.data);
+        console.log(data.data);
       } else if (data.text === "Invalid Token") {
         navigate("/login");
       } else {
-        Swal.fire("Error", data.text, "error");
+        Swal.fire("Error", data.text || "Failed to fetch Story", "error");
       }
-    } catch {
-      Swal.fire(
-        "Error",
-        "Unable to load story submissions. Please try again.",
-        "error"
-      );
+    } catch (error) {
+      console.error("Fetch error:", error);
     } finally {
       setLoading(false);
     }
@@ -65,25 +51,14 @@ const Dashboard_story = () => {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    if (!selectedStory) return undefined;
-
-    const handleKeyDown = (event) => {
-      if (event.key === "Escape") setSelectedStory(null);
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [selectedStory]);
-
-  // Delete Story
   const handleDelete = async (id) => {
     const result = await Swal.fire({
       title: "Are you sure?",
-      text: "You won't be able to revert this!",
+      text: "You won’t be able to revert this!",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#dc3545",
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
     });
 
@@ -94,28 +69,22 @@ const Dashboard_story = () => {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
         },
       });
-
       const data = await res.json();
 
       if (data.status === 200) {
         Swal.fire("Deleted!", data.text, "success");
-        setSelectedStory(null);
         fetchData();
       } else {
-        Swal.fire("Error", data.text, "error");
+        Swal.fire("Error", data.text || "Failed to delete Story", "error");
       }
-    } catch {
-      Swal.fire(
-        "Error",
-        "Unable to delete the story. Please try again.",
-        "error"
-      );
+    } catch (error) {
+      console.error("Delete error:", error);
     }
   };
 
-  // Publish / Unpublish
   const handleTogglePublish = async (id, currentStatus) => {
     try {
       const res = await fetch(`${URL}/story/${id}`, {
@@ -135,403 +104,181 @@ const Dashboard_story = () => {
         Swal.fire(
           "Success",
           `Story ${!currentStatus ? "Published" : "Unpublished"} successfully`,
-          "success"
+          "success",
         );
         fetchData();
       } else {
         Swal.fire("Error", data.text, "error");
       }
-    } catch {
-      Swal.fire(
-        "Error",
-        "Unable to update the story. Please try again.",
-        "error"
-      );
+    } catch (error) {
+      console.error("Update error:", error);
     }
   };
 
-  // Date Format
-  const formatDate = (date) => {
-    if (!date) return "N/A";
-
-    const parsedDate = new Date(date);
-    if (Number.isNaN(parsedDate.getTime())) return "N/A";
-
-    return parsedDate.toLocaleDateString("en-IN", {
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
-    });
-  };
-
-  const publishedCount = Story.filter((story) => story.isPublished).length;
-  const pendingCount = Story.length - publishedCount;
-  const normalizedSearch = searchTerm.trim().toLowerCase();
-  const visibleStories = Story.filter((story) => {
-    const matchesStatus =
-      statusFilter === "all" ||
-      (statusFilter === "published" && story.isPublished) ||
-      (statusFilter === "pending" && !story.isPublished);
-    const searchableFields = [
-      story.fullName,
-      story.email,
-      story.phone,
-      story.storyTitle,
-      story.storyDescription,
-      story.storyGenre,
-      story.storyLang,
-      story.city,
-      story.state,
-    ];
-    const matchesSearch =
-      !normalizedSearch ||
-      searchableFields.some((value) =>
-        String(value || "").toLowerCase().includes(normalizedSearch)
-      );
-
-    return matchesStatus && matchesSearch;
-  });
-
   return (
-    <main className="story-dashboard">
-      <div className="story-dashboard__inner">
-      
+    <div className="dashbord_contaner">
+      <div className="dashbord_maxwidth">
+        <h4 className="text-success mb-3">Story</h4>
 
-       
-        <section className="story-library">
-          <div className="story-library__header">
-            {/* <div>
-              <span className="story-section-kicker">The collection</span>
-              <h2>Submitted stories</h2>
-              <p>Browse each story and the person behind it.</p>
-            </div> */}
-            {/* <div className="story-controls">
-              <label className="story-search">
-                <FaSearch aria-hidden="true" />
-                <span className="story-sr-only">Search submissions</span>
-                <input
-                  type="search"
-                  placeholder="Search stories or authors"
-                  value={searchTerm}
-                  onChange={(event) => setSearchTerm(event.target.value)}
-                />
-              </label>
-              <select
-                className="story-filter"
-                aria-label="Filter stories by publication status"
-                value={statusFilter}
-                onChange={(event) => setStatusFilter(event.target.value)}
-              >
-                <option value="all">All stories</option>
-                <option value="published">Published</option>
-                <option value="pending">Awaiting review</option>
-              </select>
-            </div> */}
-          </div>
+        <div className="table-responsive">
+          <table className="table table-bordered border border-success align-middle">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Writer Details</th>
+                <th>Story Title</th>
+                <th>Story Lang</th>
+                <th>Story Genre</th>
+                <th>Story Description</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {loading ? (
+                <tr>
+                  <td colSpan="7" className="text-center">
+                    <div className="spinner-border" role="status">
+                      <span className="visually-hidden">Loading...</span>
+                    </div>
+                  </td>
+                </tr>
+              ) : Story.length > 0 ? (
+                Story.map((e, i) => (
+                  <tr key={e._id}>
+                    <td>{i + 1}</td>
+                    <td style={{ minWidth: "250px" }}>
+                      <div className="bg-light border rounded-3 p-3">
+                        {/* Name */}
+                        <div className="d-flex align-items-center gap-2 mb-3">
+                          <div className="bg-primary text-white rounded-circle p-2">
+                            <FaUser size={15} />
+                          </div>
 
-          {loading ? (
-            <div className="story-state" role="status">
-              <span className="story-loader" aria-hidden="true" />
-              <strong>Gathering the stories...</strong>
-              <span>Just a moment while the collection loads.</span>
-            </div>
-          ) : visibleStories.length > 0 ? (
-            <div className="story-list">
-              {visibleStories.map((story, index) => (
-                <article className="story-card" key={story._id}>
-                  <div className="story-card__topline">
-                    <span className="story-card__number">
-                      Submission {String(index + 1).padStart(2, "0")}
-                    </span>
-                    {/* <span
-                      className={`story-status ${
-                        story.isPublished
-                          ? "story-status--published"
-                          : "story-status--pending"
-                      }`}
+                          <div>
+                            <div className="fw-bold text-dark">
+                              {e?.fullName || "N/A"}
+                            </div>
+                            <small className="text-muted">Author</small>
+                          </div>
+                        </div>
+
+                        <hr className="my-2" />
+
+                        {/* Email */}
+                        <div className="d-flex align-items-center gap-2 mb-2">
+                          <FaEnvelope className="text-primary" />
+                          <span className="small text-break">
+                            {e?.email || "N/A"}
+                          </span>
+                        </div>
+
+                        {/* Phone */}
+                        <div className="d-flex align-items-center gap-2 mb-2">
+                          <FaPhone className="text-success" />
+                          <span className="small">{e?.phone || "N/A"}</span>
+                        </div>
+
+                        {/* Age */}
+                        <div className="d-flex align-items-center gap-2 mb-2">
+                          <FaBirthdayCake className="text-warning" />
+                          <span className="small">
+                            {e?.age ? `${e.age} Years` : "N/A"}
+                          </span>
+                        </div>
+
+                        {/* Occupation */}
+                        <div className="d-flex align-items-center gap-2 mb-2">
+                          <FaBriefcase className="text-info" />
+                          <span className="small">
+                            {e?.occupation || "N/A"}
+                          </span>
+                        </div>
+
+                        {/* Location */}
+                        <div className="d-flex align-items-center gap-2">
+                          <FaMapMarkerAlt className="text-danger" />
+                          <span className="small">
+                            {e?.city || "N/A"}, {e?.state || "N/A"}
+                          </span>
+                        </div>
+                      </div>
+                    </td>
+
+                    <td
+                      style={{
+                        wordBreak: "break-word",
+                        whiteSpace: "pre-wrap",
+                      }}
                     >
-                      <span aria-hidden="true" />
-                      {story.isPublished ? "Published" : "Awaiting review"}
-                    </span> */}
-                  </div>
+                      {e.storyTitle}
+                    </td>
+                    <td>{e?.storyLang}</td>
+                    <td>{e.storyGenre}</td>
 
-                  <div className="story-card__body">
-                    <div className="story-card__content">
-                      <span className="story-field-label">Story title</span>
-                      <h3>{story.storyTitle || "Untitled story"}</h3>
-                      <div className="story-description-block">
-                        <span className="story-field-label">
-                          Story description
-                        </span>
-                        <p className="story-card__description">
-                          {story.storyDescription?.trim() ||
-                            "The author hasn’t added a description yet."}
+                    <td style={{ minWidth: "220px" }}>
+                      {e.storyDescription ? (
+                        <p
+                          style={{
+                            whiteSpace: "pre-wrap",
+                            overflowWrap: "anywhere",
+                          }}
+                        >
+                          {e.storyDescription}
                         </p>
-                      </div>
-                      <div className="story-tags">
-                        <div className="story-tag">
-                          <span className="story-field-label">Genre</span>
-                          <span className="story-tag__value">
-                            {story.storyGenre || "Not specified"}
-                          </span>
-                        </div>
-                        <div className="story-tag">
-                          <span className="story-field-label">Language</span>
-                          <span className="story-tag__value">
-                            {story.storyLang || "Not specified"}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="story-author">
-                      <span className="story-author__avatar" aria-hidden="true">
-                        {story.fullName?.trim()?.charAt(0)?.toUpperCase() || (
-                          <FaUserCircle />
-                        )}
-                      </span>
-                      <div className="story-author__info">
-                        <span className="story-author__label">Written by</span>
-                        <strong>{story.fullName || "Unknown author"}</strong>
-                        {story.email && (
-                          <a href={`mailto:${story.email}`} title={story.email}>
-                            <FaEnvelope aria-hidden="true" />
-                            <span>{story.email}</span>
-                          </a>
-                        )}
-                        {story.phone && (
-                          <a href={`tel:${story.phone}`}>
-                            <FaPhone aria-hidden="true" />
-                            <span>{story.phone}</span>
-                          </a>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="story-card__footer">
-                    <div className="story-meta">
-                      <span>
-                        <FaMapMarkerAlt aria-hidden="true" />
-                        {[story.city, story.state].filter(Boolean).join(", ") ||
-                          "Location not provided"}
-                      </span>
-                      <span>
-                        <FaCalendarAlt aria-hidden="true" />
-                        {formatDate(story.createdAt)}
-                      </span>
-                      {story.storyLinkPdf ? (
+                      ) : e.storyLinkPdf ? (
                         <a
-                          className="story-pdf-link"
-                          href={story.storyLinkPdf}
+                          href={e.storyLinkPdf}
                           target="_blank"
                           rel="noopener noreferrer"
+                          className="d-inline-flex align-items-center gap-2 text-decoration-none border rounded-3 p-2 bg-danger-subtle text-danger"
                         >
-                          <FaFilePdf aria-hidden="true" /> Read PDF
+                          <FaFilePdf size={22} />
+
+                          <span className="fw-semibold small">View PDF</span>
+
+                          <FaExternalLinkAlt size={12} />
                         </a>
                       ) : (
-                        <span className="story-meta__muted">
-                          <FaFilePdf aria-hidden="true" /> No PDF attached
+                        <span className="badge bg-secondary-subtle text-secondary rounded-pill p-2">
+                          No Description / PDF
                         </span>
                       )}
-                    </div>
-                    <div className="story-actions">
-                      <button
-                        type="button"
-                        className="story-button story-button--quiet"
-                        onClick={() => setSelectedStory(story)}
-                      >
-                        <FaEye aria-hidden="true" /> Details
-                      </button>
+                    </td>
+
+                    <td className="d-flex gap-2">
                       {/* <button
-                        type="button"
-                        className={`story-button ${
-                          story.isPublished
-                            ? "story-button--unpublish"
-                            : "story-button--publish"
+                        className={`btn btn-sm ${
+                          e.isPublished ? "btn-success" : "btn-warning"
                         }`}
                         onClick={() =>
-                          handleTogglePublish(story._id, story.isPublished)
+                          handleTogglePublish(e._id, e.isPublished)
                         }
                       >
-                        {story.isPublished ? "Unpublish" : "Publish"}
+                        {e.isPublished ? "Unpublish" : "Publish"}
                       </button> */}
+
                       <button
                         type="button"
-                        className="story-icon-button"
-                        aria-label={`Delete ${story.storyTitle || "story"}`}
-                        onClick={() => handleDelete(story._id)}
+                        className="btn btn-danger btn-sm"
+                        onClick={() => handleDelete(e._id)}
                       >
-                        <FaTrash aria-hidden="true" />
+                        <FaTrash /> Delete
                       </button>
-                    </div>
-                  </div>
-                </article>
-              ))}
-            </div>
-          ) : (
-            <div className="story-state story-state--empty">
-              <span className="story-state__icon">
-                <FaBookOpen aria-hidden="true" />
-              </span>
-              <strong>
-                {Story.length
-                  ? "No stories match your search"
-                  : "Your collection is waiting"}
-              </strong>
-              <span>
-                {Story.length
-                  ? "Try another search or choose a different status filter."
-                  : "New submissions will appear here when authors share their work."}
-              </span>
-              {Story.length > 0 && (
-                <button
-                  type="button"
-                  className="story-button story-button--quiet"
-                  onClick={() => {
-                    setSearchTerm("");
-                    setStatusFilter("all");
-                  }}
-                >
-                  Clear filters
-                </button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="7" className="text-center text-danger">
+                    <strong>Oops! 😞 No Story found.</strong>
+                  </td>
+                </tr>
               )}
-            </div>
-          )}
-        </section>
-      </div>
-
-      {selectedStory && (
-        <div
-          className="story-modal-backdrop"
-          onClick={() => setSelectedStory(null)}
-        >
-          <section
-            className="story-modal"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="story-modal-title"
-            onClick={(event) => event.stopPropagation()}
-          >
-            <header className="story-modal__header">
-              <div>
-                <span className="story-section-kicker">Submission details</span>
-                <h2 id="story-modal-title">
-                  {selectedStory.storyTitle || "Untitled story"}
-                </h2>
-               
-              </div>
-              <button
-                type="button"
-                className="story-modal__close"
-                aria-label="Close story details"
-                onClick={() => setSelectedStory(null)}
-              >
-                <FaTimes aria-hidden="true" />
-              </button>
-            </header>
-
-            <div className="story-modal__body">
-              <section className="story-detail-section">
-                <h3><FaBookOpen aria-hidden="true" /> About the story</h3>
-                <p className="story-detail-description">
-                  {selectedStory.storyDescription?.trim() ||
-                    "No description provided."}
-                </p>
-                <div className="story-detail-grid">
-                  <div>
-                    <span>Genre</span>
-                    <strong>{selectedStory.storyGenre || "Not specified"}</strong>
-                  </div>
-                  <div>
-                    <span>Language</span>
-                    <strong>{selectedStory.storyLang || "Not specified"}</strong>
-                  </div>
-                  <div>
-                    <span>Submitted</span>
-                    <strong>{formatDate(selectedStory.createdAt)}</strong>
-                  </div>
-                </div>
-              </section>
-
-              <section className="story-detail-section">
-                <h3><FaUserCircle aria-hidden="true" /> About the author</h3>
-                <div className="story-detail-grid">
-                  <div>
-                    <span>Full name</span>
-                    <strong>{selectedStory.fullName || "Not provided"}</strong>
-                  </div>
-                  <div>
-                    <span>Age</span>
-                    <strong>{selectedStory.age ?? "Not provided"}</strong>
-                  </div>
-                  <div>
-                    <span>Email</span>
-                    <strong className="story-detail-grid__break">
-                      {selectedStory.email || "Not provided"}
-                    </strong>
-                  </div>
-                  <div>
-                    <span>Phone</span>
-                    <strong>{selectedStory.phone || "Not provided"}</strong>
-                  </div>
-                  <div>
-                    <span>Occupation</span>
-                    <strong>{selectedStory.occupation || "Not provided"}</strong>
-                  </div>
-                  <div>
-                    <span>Location</span>
-                    <strong>
-                      {[selectedStory.city, selectedStory.state]
-                        .filter(Boolean)
-                        .join(", ") || "Not provided"}
-                    </strong>
-                  </div>
-                </div>
-              </section>
-
-              <section className="story-detail-section story-detail-document">
-                <div>
-                  <h3><FaFilePdf aria-hidden="true" /> Story manuscript</h3>
-                  <p>
-                    {selectedStory.storyLinkPdf
-                      ? "Open the author's submitted PDF."
-                      : "No PDF was attached to this submission."}
-                  </p>
-                </div>
-                {selectedStory.storyLinkPdf && (
-                  <a
-                    className="story-button story-button--publish"
-                    href={selectedStory.storyLinkPdf}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <FaFilePdf aria-hidden="true" /> Open PDF
-                  </a>
-                )}
-              </section>
-            </div>
-
-            <footer className="story-modal__footer">
-              <button
-                type="button"
-                className="story-button story-button--quiet"
-                onClick={() => setSelectedStory(null)}
-              >
-                Close details
-              </button>
-              <button
-                type="button"
-                className="story-button story-button--delete"
-                onClick={() => handleDelete(selectedStory._id)}
-              >
-                <FaTrash aria-hidden="true" /> Delete story
-              </button>
-            </footer>
-          </section>
+            </tbody>
+          </table>
         </div>
-      )}
-    </main>
+      </div>
+    </div>
   );
 };
 
