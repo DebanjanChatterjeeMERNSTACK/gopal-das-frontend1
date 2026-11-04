@@ -77,6 +77,24 @@ const Dashboard_header = () => {
               Story
             </NavLink>
           </li>
+           <li>
+            <NavLink
+              to="/admin/anubuti"
+              className={({ isActive }) => (isActive ? "active-link" : "")}
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Anubuti
+            </NavLink>
+          </li>
+           <li>
+            <NavLink
+              to="/admin/anubuti-comments"
+              className={({ isActive }) => (isActive ? "active-link" : "")}
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Anubuti-Comments
+            </NavLink>
+          </li>
           <li>
             <NavLink
               to="/admin/image-gallery"

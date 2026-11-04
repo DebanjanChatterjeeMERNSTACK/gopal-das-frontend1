@@ -24,6 +24,7 @@ import Dashboard_comments from "./pages/Dashboard/Dashboard_comments";
 import ShareStory from "./pages/ShareStory";
 import Dashboard_story from "./pages/Dashboard/Dashboard_story";
 import Story_details from "./component/Home/Story/Story_details";
+import Dashboard_anubuti from "./pages/Dashboard/Dashboard_anubuti";
 
 const App = () => {
   return (
@@ -43,15 +44,16 @@ const App = () => {
           <Route path="/story-details/:id" element={<Story_details />} />
           <Route path="/login" element={<Admin_login />} />
 
-
           <Route element={<Protected allowedRoles={["admin"]} />}>
             <Route path="/admin" element={<Layout />}>
               <Route index element={<Dashboard_book />} />
-               <Route path="category" element={<Dashboard_category />} />
+              <Route path="category" element={<Dashboard_category />} />
               <Route path="blog" element={<Dashboard_blog />} />
               <Route path="contact" element={<Dashboard_contact />} />
-               <Route path="comment" element={<Dashboard_comments />} />
-               <Route path="story" element={<Dashboard_story />} />
+              <Route path="comment" element={<Dashboard_comments />} />
+              <Route path="story" element={<Dashboard_story />} />
+              <Route path="anubuti" element={<Dashboard_anubuti />} />
+
               <Route
                 path="video-gallery"
                 element={<Dashboard_videogallery />}
