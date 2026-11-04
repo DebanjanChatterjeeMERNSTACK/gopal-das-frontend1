@@ -8,6 +8,7 @@ import Book from "../component/Home/Book/Book";
 import Blog from "../component/Home/Blog/Blog";
 import Podcast from "../component/Home/Podcast/Podcast";
 import Story from "../component/Home/Story/Story";
+import Anubuti from "../component/Home/Anubuti/Anubuti";
 
 
 const Home =()=>{
@@ -18,6 +19,7 @@ const Home =()=>{
         <About/>
         <Service/>
         <Book/>
+        <Anubuti/>
         <Blog/>
         <Story/>
         <Podcast/> 

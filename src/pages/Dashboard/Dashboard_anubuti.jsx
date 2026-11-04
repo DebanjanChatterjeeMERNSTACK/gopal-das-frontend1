@@ -9,10 +9,10 @@ const URL = import.meta.env.VITE_URL;
 
 const Dashboard_anubuti = () => {
   const navigate = useNavigate();
-  const [blogimage, setblogimage] = useState("");
-  const [blogtitle, setblogtitle] = useState("");
-  const [blogdesceiption, setblogdescription] = useState("");
-  const [blog, setblog] = useState([]);
+  const [anubutiimage, setanubutiimage] = useState("");
+  const [anubutititle, setanubutititle] = useState("");
+  const [anubutidesceiption, setanubutidescription] = useState("");
+  const [anubuti, setanubuti] = useState([]);
   const [id, setid] = useState("");
   const [key, setkey] = useState(Date.now());
   const [preview, setpreview] = useState("");
@@ -24,12 +24,12 @@ const Dashboard_anubuti = () => {
     try {
       setloading(true);
       const formdata = new FormData();
-      formdata.append("blog_Image", blogimage);
-      formdata.append("blogTitle", blogtitle);
-      formdata.append("blogDescription", blogdesceiption);
+      formdata.append("anubuti_Image", anubutiimage);
+      formdata.append("anubutiTitle", anubutititle);
+      formdata.append("anubutiDescription", anubutidesceiption);
       if (toggal) {
       
-        fetch(`${URL}/update_blog/${id}`, {
+        fetch(`${URL}/update_anubuti/${id}`, {
           method: "PUT",
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -43,9 +43,9 @@ const Dashboard_anubuti = () => {
             if (data.status == 200) {
               setloading(false);
               setpreview("");
-              setblogimage("");
-              setblogdescription("");
-              setblogtitle("");
+              setanubutiimage("");
+              setanubutidescription("");
+              setanubutititle("");
               setkey(Date.now());
               settoggal(false);
               fetchdata();
@@ -65,7 +65,7 @@ const Dashboard_anubuti = () => {
           });
       } else {
        
-        fetch(`${URL}/add_blog`, {
+        fetch(`${URL}/add_anubuti`, {
           method: "POST",
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -79,9 +79,9 @@ const Dashboard_anubuti = () => {
             if (data.status == 200) {
               setloading(false);
               setpreview("");
-              setblogimage("");
-              setblogdescription("");
-              setblogtitle("");
+              setanubutiimage("");
+              setanubutidescription("");
+              setanubutititle("");
               setkey(Date.now());
               fetchdata();
               Swal.fire({
@@ -106,7 +106,7 @@ const Dashboard_anubuti = () => {
 
   const fetchdata = () => {
     setloading(true);
-    fetch(`${URL}/get_blog`, {
+    fetch(`${URL}/get_anubuti`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
@@ -115,7 +115,7 @@ const Dashboard_anubuti = () => {
       .then((data) => {
        
         if (data.status === 200) {
-          setblog(data.data);
+          setanubuti(data.data);
           setloading(false);
         } else if (data.text === "Invalid Token") {
           navigate("/login");
@@ -135,17 +135,17 @@ const Dashboard_anubuti = () => {
    
     settoggal(true);
     setid(data._id);
-    setpreview(data.blogImage);
-    setblogtitle(data.blogTitle);
-    setblogdescription(data.blogDescription);
+    setpreview(data.anubutiImage);
+    setanubutititle(data.anubutiTitle);
+    setanubutidescription(data.anubutiDescription);
   };
 
   const handleBack = () => {
     settoggal(false);
     setid("");
     setpreview("");
-    setblogtitle("");
-    setblogdescription("");
+    setanubutititle("");
+    setanubutidescription("");
   };
 
   const handleDelete = (id) => {
@@ -160,7 +160,7 @@ const Dashboard_anubuti = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`${URL}/delete_blog/${id}`, {
+        fetch(`${URL}/delete_anubuti/${id}`, {
           method: "DELETE",
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -193,11 +193,11 @@ const Dashboard_anubuti = () => {
       {/* <Dashboard_header /> */}
       <div className="dashbord_contaner">
         <div className="dashbord_maxwidth">
-          <h4 className="text-success">Journey</h4>
+          <h4 className="text-success">Anubuti</h4>
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
               <label htmlFor="formFile" className="form-label">
-                Journey Title <span className="text-danger">*</span>
+                Anubuti Title <span className="text-danger">*</span>
               </label>
               <input
                 className="form-control"
@@ -205,15 +205,15 @@ const Dashboard_anubuti = () => {
                 placeholder="Title"
                 aria-label="default input example"
                 required
-                value={blogtitle}
+                value={anubutititle}
                 onChange={(e) => {
-                  setblogtitle(e.target.value);
+                  setanubutititle(e.target.value);
                 }}
               />
             </div>
             <div className="mb-3">
               <label htmlFor="formFile" className="form-label">
-                Journey Image <span className="text-danger">*</span>
+                Anubuti Image <span className="text-danger">*</span>
               </label>
               <input
                 className="form-control"
@@ -224,7 +224,7 @@ const Dashboard_anubuti = () => {
                 required={toggal === false}
                 onChange={(e) => {
                   const file = e.target.files[0];
-                  setblogimage(file);
+                  setanubutiimage(file);
                   const reader = new FileReader();
                   reader.onload = (event) => {
                     setpreview(event.target.result); // set preview image URL
@@ -236,7 +236,7 @@ const Dashboard_anubuti = () => {
             {preview && (
               <div className="mb-3">
                 <label htmlFor="formFile" className="form-label">
-                  Preview Journey Image
+                  Preview Anubuti Image
                 </label>
                 <div>
                   <img src={preview} width={200} height={100} />
@@ -248,7 +248,7 @@ const Dashboard_anubuti = () => {
                 htmlFor="exampleFormControlTextarea1"
                 className="form-label"
               >
-                Journey Description <span className="text-danger">*</span>
+                Anubuti Description <span className="text-danger">*</span>
               </label>
               <textarea
                 className="form-control"
@@ -256,8 +256,8 @@ const Dashboard_anubuti = () => {
                 placeholder="Description"
                 rows="3"
                 required
-                value={blogdesceiption}
-                onChange={(e) => setblogdescription(e.target.value)}
+                value={anubutidesceiption}
+                onChange={(e) => setanubutidescription(e.target.value)}
               ></textarea>
             </div>
             {loading ? (
@@ -267,7 +267,7 @@ const Dashboard_anubuti = () => {
             ) : toggal ? (
               <>
                 <button type="submit" className="btn btn-success me-2">
-                  Update Journey
+                  Update Anubuti
                 </button>
                 <button className="btn btn-success" onClick={handleBack}>
                   Back
@@ -275,7 +275,7 @@ const Dashboard_anubuti = () => {
               </>
             ) : (
               <button type="submit" className="btn btn-success">
-                Submit Journey
+                Submit Anubuti
               </button>
             )}
           </form>
@@ -289,16 +289,16 @@ const Dashboard_anubuti = () => {
                   <span className="visually-hidden">Loading...</span>
                 </div>
               </div>
-            ) : blog.length > 0 ? (
+            ) : anubuti.length > 0 ? (
               <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-                {blog.map((e, i) => (
+                {anubuti.map((e, i) => (
                   <div className="col" key={i}>
                     <div className="card h-100 border-success shadow-sm">
                       <div className="position-relative">
                         <img
-                          src={e.blogImage}
+                          src={e.anubutiImage}
                           className="card-img-top"
-                          alt={e.blogTitle}
+                          alt={e.anubutiTitle}
                           style={{ height: "200px", objectFit: "cover" }}
                         />
                         <span className="position-absolute top-0 start-0 bg-success text-white px-2 py-1">
@@ -306,13 +306,13 @@ const Dashboard_anubuti = () => {
                         </span>
                       </div>
                       <div className="card-body">
-                        <h5 className="card-title"> {e.blogTitle.length > 20
-                            ? `${e.blogTitle.substring(0, 20)}...`
-                            : e.blogTitle}</h5>
+                        <h5 className="card-title"> {e.anubutiTitle.length > 20
+                            ? `${e.anubutiTitle.substring(0, 20)}...`
+                            : e.anubutiTitle}</h5>
                         <p className="card-text text-muted">
-                          {e.blogDescription.length > 100
-                            ? `${e.blogDescription.substring(0, 100)}...`
-                            : e.blogDescription}
+                          {e.anubutiDescription.length > 100
+                            ? `${e.anubutiDescription.substring(0, 100)}...`
+                            : e.anubutiDescription}
                         </p>
                       </div>
                       <div className="card-footer bg-transparent d-flex justify-content-between">
@@ -340,7 +340,7 @@ const Dashboard_anubuti = () => {
             ) : (
               <div className="text-center w-100 mt-5">
                 <h2 className="text-danger">Oops! 😞</h2>
-                <p className="fw-semibold">No Journey found .</p>
+                <p className="fw-semibold">No Anubuti found .</p>
               </div>
             )}
           </div>

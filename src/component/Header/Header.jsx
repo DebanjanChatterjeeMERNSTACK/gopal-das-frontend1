@@ -45,6 +45,11 @@ const Header = () => {
               Books
             </NavLink>
           </li>
+          <li>
+            <NavLink to="/anubuti" className={({ isActive }) => (isActive ? "active-link" : "")}>
+              My Anubuti
+            </NavLink>
+          </li>
          
           <li>
             <NavLink to="/image-gallery" className={({ isActive }) => (isActive ? "active-link" : "")}>

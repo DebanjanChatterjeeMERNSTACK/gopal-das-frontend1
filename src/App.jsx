@@ -25,6 +25,9 @@ import ShareStory from "./pages/ShareStory";
 import Dashboard_story from "./pages/Dashboard/Dashboard_story";
 import Story_details from "./component/Home/Story/Story_details";
 import Dashboard_anubuti from "./pages/Dashboard/Dashboard_anubuti";
+import Dashboard_anubuti_comments from "./pages/Dashboard/Dashboard_anubuti_comments";
+import Anubutiall from "./pages/AnubutiAll";
+import Anubuti_details from "./pages/Anubuti_details";
 
 const App = () => {
   return (
@@ -38,7 +41,9 @@ const App = () => {
           <Route path="/image-gallery" element={<ImageGallery />} />
           <Route path="/video-gallery" element={<VideoGallery />} />
           <Route path="/blogs" element={<BlogAll />} />
+          <Route path="/anubuti" element={<Anubutiall />} />
           <Route path="/blogs-details/:id" element={<Blog_details />} />
+          <Route path="/anubutis-details/:id" element={<Anubuti_details />} />
           <Route path="/contact" element={<ContactUs />} />
           <Route path="/share-your-story" element={<ShareStory />} />
           <Route path="/story-details/:id" element={<Story_details />} />
@@ -53,7 +58,10 @@ const App = () => {
               <Route path="comment" element={<Dashboard_comments />} />
               <Route path="story" element={<Dashboard_story />} />
               <Route path="anubuti" element={<Dashboard_anubuti />} />
-
+              <Route
+                path="anubuti-comments"
+                element={<Dashboard_anubuti_comments />}
+              />
               <Route
                 path="video-gallery"
                 element={<Dashboard_videogallery />}
