@@ -39,7 +39,7 @@ const Anubuti = () => {
       {anubuti.length > 0 ? (
         <div className="blog_contaner">
           <div className="blog_maxwidth">
-            <h5>My Anubuti</h5>
+            <h5>ANUBHUTI</h5>
             <h2>The Author’s Experience</h2>
             {loading ? (
               <>

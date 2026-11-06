@@ -92,7 +92,7 @@ const Dashboard_anubuti_comments = () => {
       Swal.fire("Error", "Please enter a reply before saving.", "error");
       return;
     }
-
+    setLoading(true);
     try {
       const res = await fetch(`${URL}/add_reply_anubuti/${selectedId}`, {
         method: "POST",
@@ -110,6 +110,7 @@ const Dashboard_anubuti_comments = () => {
         Swal.fire(data.mess, data.text, data.mess);
         setShowModal(false);
         setReplyText("");
+        setLoading(false);
         fetchData();
       } else {
         Swal.fire("Error", data.text, "error");
@@ -117,6 +118,7 @@ const Dashboard_anubuti_comments = () => {
     } catch (error) {
       console.error("Reply error:", error);
       Swal.fire("Error", "Something went wrong while adding reply.", "error");
+      setLoading(false);
     }
   };
 
@@ -226,9 +228,18 @@ const Dashboard_anubuti_comments = () => {
                 >
                   Cancel
                 </button>
-                <button className="btn btn-success" onClick={handleSaveReply}>
-                  Save Reply
-                </button>
+                {loading ? (
+                  <button className="btn btn-success" disabled>
+                    <div
+                      className="spinner-border text-light"
+                      role="status"
+                    ></div>
+                  </button>
+                ) : (
+                  <button className="btn btn-success" onClick={handleSaveReply}>
+                    Save Reply
+                  </button>
+                )}
               </div>
             </div>
           </div>

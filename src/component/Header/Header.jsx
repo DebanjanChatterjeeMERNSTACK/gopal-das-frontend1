@@ -37,7 +37,7 @@ const Header = () => {
           </li>
            <li>
             <NavLink to="/blogs" className={({ isActive }) => (isActive ? "active-link" : "")}>
-              My Journey
+              Journey
             </NavLink>
           </li>
           <li>
@@ -47,7 +47,7 @@ const Header = () => {
           </li>
           <li>
             <NavLink to="/anubuti" className={({ isActive }) => (isActive ? "active-link" : "")}>
-              My Anubuti
+              Anubhuti
             </NavLink>
           </li>
          

@@ -39,7 +39,7 @@ const Blog = () => {
       {blog.length > 0 ? (
         <div className="blog_contaner">
           <div className="blog_maxwidth">
-            <h5>My Journey</h5>
+            <h5>JOURNEY</h5>
             <h2>The Author’s Corner</h2>
             {loading ? (
               <>

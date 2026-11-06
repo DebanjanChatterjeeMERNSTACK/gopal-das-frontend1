@@ -43,13 +43,13 @@ const Anubutiall = () => {
     <>
       <div className="bookall_contaner">
         <div className="bgimage">
-          <h3>My Anubuti</h3>
+          <h3>My Anubhuti</h3>
         </div>
         <div className="bookall_maxwidth">
           <input
             className="form-control"
             type="text"
-            placeholder="Search Your Favourite My Anubuti...."
+            placeholder="Search Your Favourite My Anubhuti...."
             value={search}
             onChange={(e)=>setsearch(e.target.value)}
           />
@@ -90,7 +90,7 @@ const Anubutiall = () => {
               ) : (
                 <div className="text-center w-100 mt-5">
                   <h2 className="text-danger">Oops! 😞</h2>
-                  <p className="fw-semibold">No Anubuti found.</p>
+                  <p className="fw-semibold">No Anubhuti found.</p>
                 </div>
               )}
             </div>

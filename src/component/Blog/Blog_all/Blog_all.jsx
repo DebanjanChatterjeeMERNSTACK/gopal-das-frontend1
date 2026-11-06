@@ -43,13 +43,13 @@ const Blogall = () => {
     <>
       <div className="bookall_contaner">
         <div className="bgimage">
-          <h3>My Journey</h3>
+          <h3>Journey</h3>
         </div>
         <div className="bookall_maxwidth">
           <input
             className="form-control"
             type="text"
-            placeholder="Search Your Favourite My Journey...."
+            placeholder="Search Your Favourite Journey...."
             value={search}
             onChange={(e)=>setsearch(e.target.value)}
           />
