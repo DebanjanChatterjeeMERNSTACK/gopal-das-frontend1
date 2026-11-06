@@ -9,16 +9,13 @@ const Anubutiall = () => {
   const [anubuti, setanubuti] = useState([]);
   const [loading, setloading] = useState(false);
 
-
   const formatDate = (dateString) => {
-  const date = new Date(dateString);
-  const day = date.getDate().toString().padStart(2, '0');
-  const month = date.toLocaleString('default', { month: 'short' });
-  const year = date.getFullYear();
-  return `${day} ${month}, ${year}`;
-};
-
-
+    const date = new Date(dateString);
+    const day = date.getDate().toString().padStart(2, "0");
+    const month = date.toLocaleString("default", { month: "short" });
+    const year = date.getFullYear();
+    return `${day} ${month}, ${year}`;
+  };
 
   useEffect(() => {
     setloading(true);
@@ -27,7 +24,6 @@ const Anubutiall = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        
         if (data.status === 200) {
           setanubuti(data.data);
           setloading(false);
@@ -43,15 +39,15 @@ const Anubutiall = () => {
     <>
       <div className="bookall_contaner">
         <div className="bgimage">
-          <h3>My Anubhuti</h3>
+          <h3>Anubhuti</h3>
         </div>
         <div className="bookall_maxwidth">
           <input
             className="form-control"
             type="text"
-            placeholder="Search Your Favourite My Anubhuti...."
+            placeholder="Search Your Favourite Anubhuti...."
             value={search}
-            onChange={(e)=>setsearch(e.target.value)}
+            onChange={(e) => setsearch(e.target.value)}
           />
           <div className="">
             <div className="blog_flex">
@@ -65,7 +61,7 @@ const Anubutiall = () => {
                   </div>
                 </>
               ) : anubuti.length > 0 ? (
-                anubuti.map((e,i) => {
+                anubuti.map((e, i) => {
                   return (
                     <>
                       <NavLink to={`/anubutis-details/${e._id}`} key={i}>
@@ -73,15 +69,22 @@ const Anubutiall = () => {
                           <div>
                             <img src={e.anubutiImage} className="card_image" />
                           </div>
-                          <h3>{e.anubutiTitle.slice(0,20)}...</h3>
+                          <h3>{e.anubutiTitle.slice(0, 20)}...</h3>
                           <div className="blog_date">
                             <GoDiscussionOutdated className="date_icon" />
                             <i>{formatDate(e.Date)}</i>
                           </div>
-                          <p>
-                            {e.anubutiDescription.slice(0,150)}{" "}
-                            <strong>Read More...</strong>
-                          </p>
+                         
+                          <p
+                           
+                            dangerouslySetInnerHTML={{
+                              __html:
+                                e.anubutiDescription.length > 150
+                                  ? e.anubutiDescription.substring(0, 150) +
+                                    " <strong>Read More...</strong>"
+                                  : e.anubutiDescription,
+                            }}
+                          />
                         </div>
                       </NavLink>
                     </>

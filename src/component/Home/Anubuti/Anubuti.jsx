@@ -65,10 +65,16 @@ const Anubuti = () => {
                             <GoDiscussionOutdated className="date_icon" />
                             <i>{formatDate(e.Date)}</i>
                           </div>
-                          <p>
-                            {e.anubutiDescription.slice(0, 150)}{" "}
-                            <strong>Read More...</strong>
-                          </p>
+                            <p
+                           
+                            dangerouslySetInnerHTML={{
+                              __html:
+                                e.anubutiDescription.length > 150
+                                  ? e.anubutiDescription.substring(0, 150) +
+                                    " <strong>Read More...</strong>"
+                                  : e.anubutiDescription,
+                            }}
+                          />
                         </div>
                       </NavLink>
                     </>

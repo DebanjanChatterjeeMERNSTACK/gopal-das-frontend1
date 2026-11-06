@@ -9,9 +9,12 @@ const Anubuti_contant = ({data}) => {
           <div className="Blog_contant_contant">
             <div>
             <h1>The Pleasure</h1>
-            <p>
-             {data}
-            </p>
+              <p
+                           
+                            dangerouslySetInnerHTML={{
+                              __html: data
+                            }}
+                          />
             </div>
           </div>
         </div>

@@ -4,6 +4,22 @@ import "./Dashboard.css";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import {
+  Editor,
+  EditorProvider,
+  Toolbar,
+  BtnBold,
+  BtnItalic,
+  BtnUnderline,
+  BtnStrikeThrough,
+  BtnNumberedList,
+  BtnBulletList,
+  BtnLink,
+  BtnClearFormatting,
+  BtnStyles,
+  BtnRedo,
+  BtnUndo,
+} from "react-simple-wysiwyg";
 
 const URL = import.meta.env.VITE_URL;
 
@@ -28,7 +44,6 @@ const Dashboard_anubuti = () => {
       formdata.append("anubutiTitle", anubutititle);
       formdata.append("anubutiDescription", anubutidesceiption);
       if (toggal) {
-      
         fetch(`${URL}/update_anubuti/${id}`, {
           method: "PUT",
           headers: {
@@ -39,7 +54,6 @@ const Dashboard_anubuti = () => {
         })
           .then((res) => res.json())
           .then((data) => {
-           
             if (data.status == 200) {
               setloading(false);
               setpreview("");
@@ -64,7 +78,6 @@ const Dashboard_anubuti = () => {
             }
           });
       } else {
-       
         fetch(`${URL}/add_anubuti`, {
           method: "POST",
           headers: {
@@ -75,7 +88,6 @@ const Dashboard_anubuti = () => {
         })
           .then((res) => res.json())
           .then((data) => {
-         
             if (data.status == 200) {
               setloading(false);
               setpreview("");
@@ -113,7 +125,6 @@ const Dashboard_anubuti = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-       
         if (data.status === 200) {
           setanubuti(data.data);
           setloading(false);
@@ -132,7 +143,6 @@ const Dashboard_anubuti = () => {
   }, []);
 
   const handleEdit = (data) => {
-   
     settoggal(true);
     setid(data._id);
     setpreview(data.anubutiImage);
@@ -250,15 +260,37 @@ const Dashboard_anubuti = () => {
               >
                 Anubuti Description <span className="text-danger">*</span>
               </label>
-              <textarea
-                className="form-control"
-                id="exampleFormControlTextarea1"
-                placeholder="Description"
-                rows="3"
-                required
-                value={anubutidesceiption}
-                onChange={(e) => setanubutidescription(e.target.value)}
-              ></textarea>
+              <EditorProvider>
+                <Editor
+                  value={anubutidesceiption}
+                  onChange={(e) => setanubutidescription(e.target.value)}
+                >
+                  <Toolbar>
+                    {/* Text formatting */}
+                    <BtnBold />
+                    <BtnItalic />
+                    <BtnUnderline />
+                    <BtnStrikeThrough />
+
+                    {/* Lists */}
+                    <BtnNumberedList />
+                    <BtnBulletList />
+
+                    {/* Headings and styles */}
+                    <BtnStyles />
+
+                    {/* Links and images */}
+                    <BtnLink />
+                    
+                    {/* History */}
+                    <BtnUndo />
+                    <BtnRedo />
+
+                    {/* Clear formatting */}
+                    <BtnClearFormatting />
+                  </Toolbar>
+                </Editor>
+              </EditorProvider>
             </div>
             {loading ? (
               <button className="btn btn-success" disabled>
@@ -306,14 +338,21 @@ const Dashboard_anubuti = () => {
                         </span>
                       </div>
                       <div className="card-body">
-                        <h5 className="card-title"> {e.anubutiTitle.length > 20
+                        <h5 className="card-title">
+                          {" "}
+                          {e.anubutiTitle.length > 20
                             ? `${e.anubutiTitle.substring(0, 20)}...`
-                            : e.anubutiTitle}</h5>
-                        <p className="card-text text-muted">
-                          {e.anubutiDescription.length > 100
-                            ? `${e.anubutiDescription.substring(0, 100)}...`
-                            : e.anubutiDescription}
-                        </p>
+                            : e.anubutiTitle}
+                        </h5>
+                        <p
+                          className="card-text text-muted"
+                          dangerouslySetInnerHTML={{
+                            __html:
+                              e.anubutiDescription.length > 100
+                                ? e.anubutiDescription.substring(0, 100) + "..."
+                                : e.anubutiDescription,
+                          }}
+                        />
                       </div>
                       <div className="card-footer bg-transparent d-flex justify-content-between">
                         <button
